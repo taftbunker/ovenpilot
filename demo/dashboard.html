@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bella Cucina — Owner Dashboard (Demo)</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="banner">DEMO — fictional restaurant. Text blasts are simulated; nothing is actually sent.</div>
+<div class="wrap">
+  <div class="topbar"><div><h1>Bella Cucina · Owner Dashboard</h1><div class="fine">VIP text list (simple CRM)</div></div>
+    <div class="row" style="margin:0"><a class="btn small secondary" href="index.html">Demo home</a><a class="btn small secondary" href="landing.html?table=12">Diner page</a>
+    <button class="btn small secondary" id="seed">Load sample guests</button><button class="btn small secondary" id="reset">Reset demo</button></div></div>
+  <div class="grid" style="margin-top:20px">
+    <div class="stat"><b id="sTotal">0</b><span>Contacts</span></div><div class="stat"><b id="sWeek">0</b><span>Joined last 7 days</span></div>
+    <div class="stat"><b id="sRed">0</b><span>Appetizers redeemed</span></div><div class="stat"><b id="sSent">0</b><span>Texts sent (simulated)</span></div></div>
+  <div class="two" style="margin-top:6px">
+    <div class="card"><div class="topbar"><h3 style="margin:0">Contacts</h3><input id="q" placeholder="Search name, phone, email" style="max-width:240px;padding:8px 12px"></div>
+      <div style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Table</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+      <p class="fine" id="empty">No contacts yet. Scan the QR (or open the diner page) to add one, or load sample guests.</p></div>
+    <div>
+      <div class="card"><h3 style="margin-top:0">Send a text blast <span class="sim">Simulated</span></h3>
+        <label for="tpl">Template</label><select id="tpl"></select>
+        <label for="aud">Audience</label><select id="aud"><option value="all">All opted-in contacts</option><option value="birthday">Birthdays this month</option></select>
+        <label for="msg">Message <span class="fine">({first} and {restaurant} are filled in per contact)</span></label><textarea id="msg"></textarea>
+        <div class="fine" id="count"></div>
+        <label for="when">Schedule</label><select id="when"><option value="now">Send now</option><option value="mon4">Every Monday 4:00 PM (slow hour)</option></select>
+        <button class="btn" id="send">Send blast</button><div class="err" id="sendMsg" style="color:var(--green)"></div>
+        <div id="preview" class="phone hidden" style="margin-top:12px"><div class="fine">Preview for first recipient:</div><div class="bubble" id="pv"></div></div></div>
+      <div class="card log"><h3 style="margin-top:0">Campaign history</h3><div id="camps"><p class="fine">No blasts sent yet.</p></div></div>
+    </div></div>
+</div>
+<footer class="powered"><a href="../website/index.html"><img src="assets/ovenpilot-mark.svg" alt="" height="14"><span>Powered by <b>Ovenpilot</b></span></a></footer>
+<script src="data.js"></script><script>
+const $=id=>document.getElementById(id);
+Object.entries(TEMPLATES).forEach(([k,t])=>$('tpl').insertAdjacentHTML('beforeend',`<option value="${k}">${t.label}</option>`));
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function setTpl(){const k=$('tpl').value;$('msg').value=TEMPLATES[k].body;$('aud').value=k==='birthday'?'birthday':'all';$('when').value=k==='slow'?'mon4':'now';updCount()}
+function audience(){const db=loadDB();let l=db.contacts.filter(c=>c.optedIn);if($('aud').value==='birthday'){const m=new Date().getMonth()+1;l=l.filter(c=>c.birthday&&+c.birthday.split('-')[1]===m)}return l}
+function updCount(){const l=audience();$('count').textContent=`Will go to ${l.length} contact${l.length===1?'':'s'}.`;if(l.length){$('preview').classList.remove('hidden');$('pv').textContent=fill($('msg').value,l[0])}else $('preview').classList.add('hidden')}
+function render(){const db=loadDB();const q=$('q').value.toLowerCase();
+  const list=db.contacts.filter(c=>(c.name+c.phone+c.email).toLowerCase().includes(q)).slice().reverse();
+  $('rows').innerHTML=list.map(c=>`<tr><td>${esc(c.name)}</td><td>${fmtPhone(c.phone)}</td><td>${esc(c.email)}</td><td>${esc(c.table||'—')}</td><td><code>${c.code}</code></td>
+   <td>${c.redeemed?'<span class="tag">Redeemed</span>':'<span class="tag no">Unclaimed</span>'}</td><td>${c.redeemed?'':`<button class="btn small secondary" data-r="${c.id}">Mark redeemed</button>`}</td></tr>`).join('');
+  $('empty').style.display=db.contacts.length?'none':'block';
+  const wk=Date.now()-7*864e5;$('sTotal').textContent=db.contacts.length;$('sWeek').textContent=db.contacts.filter(c=>new Date(c.createdAt)>wk).length;
+  $('sRed').textContent=db.contacts.filter(c=>c.redeemed).length;$('sSent').textContent=db.messages.filter(m=>m.type==='sms').length;
+  $('camps').innerHTML=db.campaigns.length?db.campaigns.map(c=>`<div class="item"><b>${esc(c.label)}</b> · ${c.sent} texts · ${new Date(c.at).toLocaleString()}${c.schedule?` · <i>${esc(c.schedule)}</i>`:''}<div class="fine">${esc(c.body)}</div></div>`).join(''):'<p class="fine">No blasts sent yet.</p>';
+  updCount()}
+$('rows').addEventListener('click',e=>{const id=e.target.dataset.r;if(!id)return;const db=loadDB();const c=db.contacts.find(x=>x.id===id);c.redeemed=true;saveDB(db);render()});
+$('tpl').onchange=setTpl;$('aud').onchange=updCount;$('msg').oninput=updCount;$('q').oninput=render;
+$('seed').onclick=()=>{seedDemo();render()};$('reset').onclick=()=>{if(confirm('Clear all demo data?')){localStorage.removeItem(DB_KEY);render()}};
+$('send').onclick=()=>{const n=sendBlast($('tpl').value,$('msg').value,$('aud').value);
+  if($('when').value==='mon4'){const db=loadDB();db.campaigns[0].schedule='Scheduled weekly: Mondays 4:00 PM (demo sends one batch now)';saveDB(db)}
+  $('sendMsg').textContent=`✓ Simulated blast "sent" to ${n} contact${n===1?'':'s'}. No real texts were sent.`;render()};
+setTpl();render();
+</script></body></html>
