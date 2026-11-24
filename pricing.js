@@ -8,9 +8,9 @@
 const AUTOMATIONS = [
   { id: "receptionist", name: "AI Phone Receptionist", short: "24/7 calls, reservations, FAQs, to-go orders" },
   { id: "reservations", name: "Reservations", short: "WhatsApp/text booking 24/7, floor-plan check, confirmation + map pin" },
-  { id: "orders", name: "Orders", short: "Delivery apps + website in one queue, kitchen tickets, rider-on-the-way texts" },
+  { id: "orders", name: "Orders", short: "Delivery apps + website in one queue, kitchen tickets" },
   { id: "noshow", name: "No-show Shield", short: "Auto-confirm 2 hours before, release no-shows to the waitlist" },
-  { id: "reviews", name: "Review Booster", short: "Next-morning check-in; 5-star to Google, under 4 privately to the owner" },
+  { id: "reviews", name: "Review Booster", short: "Next-morning check-in; every guest gets your Google review link, and low scores alert you first" },
   { id: "promos", name: "Slow-Hour Promos", short: "Spot dips, text a deal to regulars; includes the QR text-list signup" },
   { id: "stock", name: "Stock & Supplier", short: "Inventory from orders, draft supplier order for your approval" },
   { id: "rosters", name: "Smart Rosters", short: "Shifts built around peaks, sick-call cover" },
@@ -18,6 +18,7 @@ const AUTOMATIONS = [
 ];
 const TIERS = [
   { name: "Basic",   count: 1, setup: 750,  monthly: 150,  pickAny: true, includes: ["receptionist"],
+    cap: "800 call minutes/month included, then $0.15 per extra minute",
     summary: "Pick any 1 automation. We recommend the AI Phone Receptionist." },
   { name: "Starter", count: 3, setup: 1750, monthly: 350,  includes: ["receptionist", "reservations", "reviews"],
     summary: "Answer every call, book every table, and grow your reviews." },
@@ -29,7 +30,7 @@ const TIERS = [
     summary: "The Full Restaurant Growth System: all 9, including stock and staff rosters." }
 ];
 const ADDON = { setup: 650, monthly: 125 };
-const PRICING_NOTE = "Every package can swap in any automations you prefer; the bundles above are our recommendation. A fair-use allowance of AI call minutes and texts is included; heavy usage is billed at cost, with notice first. Third-party software you already use (POS, delivery apps, booking or payroll tools) is billed by those providers. Growth, Pro and Max setup can be split: one fixed monthly payment covers the setup plus that month's service for 2 to 4 months, then the normal monthly fee applies. Prices in USD, no long-term contract.";
+const PRICING_NOTE = "Every package can swap in any automations you prefer; the bundles above are our recommendation. Basic includes 800 call minutes/month, then $0.15 per extra minute. Other packages include a fair-use allowance of AI call minutes and texts; heavy usage is billed at cost, with notice first. Third-party software you already use (POS, delivery apps, booking or payroll tools) is billed by those providers. Growth, Pro and Max setup can be split: one fixed monthly payment covers the setup plus that month's service for 2 to 4 months, then the normal monthly fee applies. Prices in USD, no long-term contract.";
 
 const usd = n => "$" + n.toLocaleString("en-US", { maximumFractionDigits: 2 });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -48,6 +49,7 @@ const nameOf = id => AUTOMATIONS.find(a => a.id === id).name;
         <p class="tier-price"><b>${usd(t.monthly)}</b><span>/month</span></p>
         <p class="tier-setup">+ ${usd(t.setup)} one-time setup</p>
         ${t.split ? `<p class="tier-split">or spread it: ${t.split.n} payments of ${usd(t.split.amount)}/mo, then ${usd(t.monthly)}/mo</p>` : ""}
+        ${t.cap ? `<p class="tier-cap">${esc(t.cap)}</p>` : ""}
         <p class="tier-summary">${esc(t.summary)}</p>
         <ul>${list.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
         <a class="btn ${t.featured ? "btn-primary" : "btn-ghost"} btn-block" href="https://whop.com/ovenpilot">${t.featured ? "Book a call" : "Choose " + esc(t.name)}</a>
