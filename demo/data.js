@@ -6,12 +6,12 @@ function saveDB(db){localStorage.setItem(DB_KEY,JSON.stringify(db))}
 function normPhone(p){const d=(p||'').replace(/\D/g,'');if(d.length===11&&d[0]==='1')return d.slice(1);return d}
 function fmtPhone(d){return d.length===10?`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`:d}
 function makeCode(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='BC-';for(let i=0;i<4;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
-function addContact({name,phone,email,birthday,table,consent}){
+function addContact({name,phone,email,birthday,table,consent,ageConfirmed}){
   const db=loadDB();const p=normPhone(phone);
   const existing=db.contacts.find(c=>c.phone===p);
   if(existing) return {contact:existing,duplicate:true};
   const contact={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),name:name.trim(),phone:p,email:email.trim().toLowerCase(),birthday:birthday||'',table:table||'',
-    code:makeCode(),redeemed:false,optedIn:!!consent,source:'Table QR',createdAt:new Date().toISOString()};
+    code:makeCode(),redeemed:false,optedIn:!!consent,ageConfirmed:!!ageConfirmed,source:'Table QR',createdAt:new Date().toISOString()};
   db.contacts.push(contact);
   const first=contact.name.split(' ')[0];
   db.messages.push({type:'sms',to:contact.phone,at:contact.createdAt,body:`${RESTAURANT.name}: Hi ${first}! Your ${RESTAURANT.offer} is ready. Show code ${contact.code} to your server. Reply STOP to opt out.`});

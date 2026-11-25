@@ -52,6 +52,7 @@ const nameOf = id => AUTOMATIONS.find(a => a.id === id).name;
         ${t.cap ? `<p class="tier-cap">${esc(t.cap)}</p>` : ""}
         <p class="tier-summary">${esc(t.summary)}</p>
         <ul>${list.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+        <p class="tier-renew">${usd(t.monthly)} billed every 30 days, renewing until you cancel${t.cap ? " (plus any extra minutes)" : ""}. Cancel anytime by email or Whop message: 30 days' notice, no fee. <a href="refunds.html">Cancellation terms</a></p>
         <a class="btn ${t.featured ? "btn-primary" : "btn-ghost"} btn-block" href="https://whop.com/ovenpilot">${t.featured ? "Book a call" : "Choose " + esc(t.name)}</a>
       </article>`;
     }).join("");
