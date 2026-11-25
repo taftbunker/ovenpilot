@@ -4,6 +4,7 @@ const RESTAURANT={name:'Bella Cucina',city:'Austin, TX',phone:'(512) 555-0142',o
 function loadDB(){try{return JSON.parse(localStorage.getItem(DB_KEY))||{contacts:[],messages:[],campaigns:[]}}catch(e){return{contacts:[],messages:[],campaigns:[]}}}
 function saveDB(db){localStorage.setItem(DB_KEY,JSON.stringify(db))}
 function normPhone(p){const d=(p||'').replace(/\D/g,'');if(d.length===11&&d[0]==='1')return d.slice(1);return d}
+function validPhone(p){return /^[2-9]\d{2}[2-9]\d{6}$/.test(normPhone(p))} // NANP, like the real app
 function fmtPhone(d){return d.length===10?`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`:d}
 function makeCode(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='BC-';for(let i=0;i<4;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
 function addContact({name,phone,email,birthday,table,consent,ageConfirmed}){

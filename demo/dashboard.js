@@ -16,7 +16,9 @@ function render(){const db=loadDB();const q=$('q').value.toLowerCase();
 $('rows').addEventListener('click',e=>{const id=e.target.dataset.r;if(!id)return;const db=loadDB();const c=db.contacts.find(x=>x.id===id);c.redeemed=true;saveDB(db);render()});
 $('tpl').onchange=setTpl;$('aud').onchange=updCount;$('msg').oninput=updCount;$('q').oninput=render;
 $('seed').onclick=()=>{seedDemo();render()};$('reset').onclick=()=>{if(confirm('Clear all demo data?')){localStorage.removeItem(DB_KEY);render()}};
-$('send').onclick=()=>{const n=sendBlast($('tpl').value,$('msg').value,$('aud').value);
+let sending=false;
+$('send').onclick=()=>{if(sending)return;sending=true;$('send').disabled=true;setTimeout(()=>{sending=false;$('send').disabled=false},1500); // a double-click sends one blast
+  const n=sendBlast($('tpl').value,$('msg').value,$('aud').value);
   if($('when').value==='mon4'){const db=loadDB();db.campaigns[0].schedule='Scheduled weekly: Mondays 4:00 PM (demo sends one batch now)';saveDB(db)}
   $('sendMsg').textContent=`✓ Simulated blast "sent" to ${n} contact${n===1?'':'s'}. No real texts were sent.`;render()};
 setTpl();render();
