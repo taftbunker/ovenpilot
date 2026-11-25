@@ -17,20 +17,20 @@ const AUTOMATIONS = [
   { id: "morning", name: "Morning Page", short: "A daily owner brief from all your automations" }
 ];
 const TIERS = [
-  { name: "Basic",   count: 1, setup: 750,  monthly: 150,  pickAny: true, includes: ["receptionist"],
+  { name: "Basic",   count: 1, setup: 1000, monthly: 200,  pickAny: true, includes: ["receptionist"],
     cap: "800 call minutes/month included, then $0.15 per extra minute",
     summary: "Pick any 1 automation. We recommend the AI Phone Receptionist." },
-  { name: "Starter", count: 3, setup: 1750, monthly: 350,  includes: ["receptionist", "reservations", "reviews"],
+  { name: "Starter", count: 3, setup: 2500, monthly: 500,  split: { n: 2, amount: 1250 }, includes: ["receptionist", "reservations", "reviews"],
     summary: "Answer every call, book every table, and grow your reviews." },
-  { name: "Growth",  count: 5, setup: 2750, monthly: 550,  split: { n: 2, amount: 1925 }, featured: true, badge: "Most popular", includes: ["receptionist", "reservations", "reviews", "noshow", "promos"],
+  { name: "Growth",  count: 5, setup: 4500, monthly: 1000, split: { n: 2, amount: 2250 }, featured: true, badge: "Most popular", includes: ["receptionist", "reservations", "reviews", "noshow", "promos"],
     summary: "Fill the seats you have: fewer no-shows and busier slow hours." },
-  { name: "Pro",     count: 7, setup: 4000, monthly: 750,  split: { n: 4, amount: 1750 }, includes: ["receptionist", "reservations", "reviews", "noshow", "promos", "orders", "morning"],
+  { name: "Pro",     count: 7, setup: 7000, monthly: 1400, split: { n: 4, amount: 1750 }, includes: ["receptionist", "reservations", "reviews", "noshow", "promos", "orders", "morning"],
     summary: "Adds one order queue for every channel and a daily brief." },
-  { name: "Max",     count: 9, setup: 5000, monthly: 1000, split: { n: 4, amount: 2250 }, badge: "All 9 automations", includes: AUTOMATIONS.map(a => a.id),
+  { name: "Max",     count: 9, setup: 10000, monthly: 2000, split: { n: 4, amount: 2500 }, badge: "All 9 automations", includes: AUTOMATIONS.map(a => a.id),
     summary: "The Full Restaurant Growth System: all 9, including stock and staff rosters." }
 ];
-const ADDON = { setup: 650, monthly: 125 };
-const PRICING_NOTE = "Every package can swap in any automations you prefer; the bundles above are our recommendation. Basic includes 800 call minutes/month, then $0.15 per extra minute. Other packages include a fair-use allowance of AI call minutes and texts; heavy usage is billed at cost, with notice first. Third-party software you already use (POS, delivery apps, booking or payroll tools) is billed by those providers. Growth, Pro and Max setup can be split: one fixed monthly payment covers the setup plus that month's service for 2 to 4 months, then the normal monthly fee applies. Prices in USD, no long-term contract.";
+const ADDON = { setup: 900, monthly: 175 };
+const PRICING_NOTE = "Every package can swap in any automations you prefer; the bundles above are our recommendation. Basic includes 800 call minutes/month, then $0.15 per extra minute. Other packages include a fair-use allowance of AI call minutes and texts; heavy usage is billed at cost, with notice first. Third-party software you already use (POS, delivery apps, booking or payroll tools) is billed by those providers. Starter, Growth, Pro and Max setup can be paid in 2 to 4 monthly installments (no payment over $2,500); the monthly fee is billed separately from the start. Prices in USD, no long-term contract.";
 
 const usd = n => "$" + n.toLocaleString("en-US", { maximumFractionDigits: 2 });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -48,7 +48,7 @@ const nameOf = id => AUTOMATIONS.find(a => a.id === id).name;
         <h3>${esc(t.name)}</h3>
         <p class="tier-price"><b>${usd(t.monthly)}</b><span>/month</span></p>
         <p class="tier-setup">+ ${usd(t.setup)} one-time setup</p>
-        ${t.split ? `<p class="tier-split">or spread it: ${t.split.n} payments of ${usd(t.split.amount)}/mo, then ${usd(t.monthly)}/mo</p>` : ""}
+        ${t.split ? `<p class="tier-split">or pay the setup in ${t.split.n} monthly payments of ${usd(t.split.amount)}</p>` : ""}
         ${t.cap ? `<p class="tier-cap">${esc(t.cap)}</p>` : ""}
         <p class="tier-summary">${esc(t.summary)}</p>
         <ul>${list.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
