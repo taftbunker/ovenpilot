@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"><meta name="referrer" content="strict-origin-when-cross-origin"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bella Cucina — Free Appetizer</title><link rel="stylesheet" href="style.css"></head><body>
 <div class="banner">DEMO — fictional restaurant. No real texts or emails are sent.</div>
 <div class="mobile">
@@ -8,40 +8,23 @@
     <form id="f" class="card" novalidate>
       <label for="name">Name</label><input id="name" autocomplete="name" placeholder="First and last name" required>
       <label for="phone">Mobile number</label><input id="phone" type="tel" autocomplete="tel" placeholder="(512) 555-0123" required>
-      <label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+      <label for="email">Email <span class="fine">(optional, to get the code by email too)</span></label><input id="email" type="email" autocomplete="email" placeholder="you@example.com">
       <label for="bday">Birthday <span class="fine">(optional — for a birthday treat)</span></label><input id="bday" type="date">
       <label class="fine" style="font-weight:400;display:flex;gap:10px;align-items:flex-start;margin-top:16px"><input id="consent" type="checkbox" style="width:auto;margin-top:3px">
         <span>Yes, text me offers from Bella Cucina. Up to 4 msgs/month. Msg &amp; data rates may apply. Reply STOP to cancel, HELP for help. Consent is not required to purchase.</span></label>
       <div class="err" id="err"></div>
       <button class="btn" type="submit">Claim my free appetizer</button>
       <p class="fine" style="text-align:center">One per guest · dine-in only</p>
+      <p class="fine" style="text-align:center">We use your details only for this offer and, if you tick the box, for texts. <a href="../privacy.html#guests">Privacy</a>. In a real setup this links to the restaurant's own privacy notice.</p>
     </form>
   </div>
   <div id="doneView" class="hidden">
     <div class="card" style="text-align:center"><div style="font-size:42px">🎉</div><h2 style="margin:4px 0" id="doneTitle">You're in!</h2><p style="margin:0;color:var(--muted)">Show this code to your server:</p>
       <div class="code" id="code">BC-XXXX</div><p class="fine" id="dupNote"></p></div>
     <div class="card"><span class="sim">Simulated text message</span><div class="phone" style="margin-top:10px"><div class="fine">To: <span id="smsTo"></span></div><div class="bubble" id="sms"></div></div></div>
-    <div class="card"><span class="sim">Simulated email</span><div class="email" style="margin-top:10px"><div class="hdr">To: <span id="emTo"></span><br>Subject: <span id="emSub"></span></div><div id="emBody"></div></div></div>
+    <div class="card" id="emCard"><span class="sim">Simulated email</span><div class="email" style="margin-top:10px"><div class="hdr">To: <span id="emTo"></span><br>Subject: <span id="emSub"></span></div><div id="emBody"></div></div></div>
     <a class="btn secondary" href="dashboard.html">Open owner dashboard →</a>
   </div>
 </div>
-<footer class="powered"><a href="../"><img src="assets/ovenpilot-mark.svg" alt="" height="14"><span>Powered by <b>Ovenpilot</b></span></a></footer>
-<script src="data.js"></script><script>
-const table=new URLSearchParams(location.search).get('table')||'';
-if(table) document.getElementById('tableTxt').textContent=` (table ${table})`;
-document.getElementById('f').addEventListener('submit',e=>{
-  e.preventDefault();const v=id=>document.getElementById(id).value.trim();const err=document.getElementById('err');
-  if(v('name').length<2) return err.textContent='Please enter your name.';
-  if(normPhone(v('phone')).length!==10) return err.textContent='Please enter a 10-digit US mobile number.';
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return err.textContent='Please enter a valid email.';
-  if(!document.getElementById('consent').checked) return err.textContent='Please check the box to join the text list.';
-  err.textContent='';
-  const {contact,duplicate}=addContact({name:v('name'),phone:v('phone'),email:v('email'),birthday:v('bday'),table,consent:true});
-  const db=loadDB();const sms=db.messages.filter(m=>m.type==='sms'&&m.to===contact.phone)[0];const em=db.messages.filter(m=>m.type==='email'&&m.to===contact.email)[0];
-  document.getElementById('code').textContent=contact.code;
-  if(duplicate){document.getElementById('doneTitle').textContent='Welcome back!';document.getElementById('dupNote').textContent='This number is already on the list, so here is your original code.'}
-  document.getElementById('smsTo').textContent=fmtPhone(contact.phone);document.getElementById('sms').textContent=sms?sms.body:'';
-  document.getElementById('emTo').textContent=contact.email;document.getElementById('emSub').textContent=em?em.subject:'';document.getElementById('emBody').textContent=em?em.body:'';
-  document.getElementById('formView').classList.add('hidden');document.getElementById('doneView').classList.remove('hidden');window.scrollTo(0,0);
-});
-</script></body></html>
+<footer class="powered"><a href="../"><img src="assets/ovenpilot-mark.svg" alt="" height="14"><span>Powered by <b>Ovenpilot</b></span></a><nav class="legal-links" aria-label="Legal"><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../refunds.html">Refunds &amp; cancellation</a> · <a href="../subprocessors.html">Subprocessors</a> · <a href="../ai.html">AI disclosure</a></nav></footer>
+<script src="data.js"></script><script src="landing.js"></script></body></html>

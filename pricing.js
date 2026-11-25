@@ -21,7 +21,7 @@ const TIERS = [
     cap: "800 call minutes/month included, then $0.15 per extra minute",
     summary: "Pick any 1 automation. We recommend the AI Phone Receptionist." },
   { name: "Starter", count: 3, setup: 2500, monthly: 500,  split: { n: 2, amount: 1250 }, includes: ["receptionist", "reservations", "reviews"],
-    summary: "Answer every call, book every table, and grow your reviews." },
+    summary: "Answer calls 24/7, book tables, and grow your reviews." },
   { name: "Growth",  count: 5, setup: 4500, monthly: 1000, split: { n: 2, amount: 2250 }, featured: true, badge: "Most popular", includes: ["receptionist", "reservations", "reviews", "noshow", "promos"],
     summary: "Fill the seats you have: fewer no-shows and busier slow hours." },
   { name: "Pro",     count: 7, setup: 7000, monthly: 1400, split: { n: 4, amount: 1750 }, includes: ["receptionist", "reservations", "reviews", "noshow", "promos", "orders", "morning"],
@@ -30,7 +30,7 @@ const TIERS = [
     summary: "The Full Restaurant Growth System: all 9, including stock and staff rosters." }
 ];
 const ADDON = { setup: 900, monthly: 175 };
-const PRICING_NOTE = "Every package can swap in any automations you prefer; the bundles above are our recommendation. Basic includes 800 call minutes/month, then $0.15 per extra minute. Other packages include a fair-use allowance of AI call minutes and texts; heavy usage is billed at cost, with notice first. Third-party software you already use (POS, delivery apps, booking or payroll tools) is billed by those providers. Starter, Growth, Pro and Max setup can be paid in 2 to 4 monthly installments (no payment over $2,500); the monthly fee is billed separately from the start. Prices in USD, no long-term contract.";
+const PRICING_NOTE = "Every package can swap in any automations you prefer; the bundles above are our recommendation. Basic includes 800 call minutes/month, then $0.15 per extra minute. Other packages include a fair-use allowance of AI call minutes and texts; heavy usage is billed at cost, with notice first. Third-party software you already use (POS, delivery apps, booking or payroll tools) is billed by those providers. Starter, Growth, Pro and Max setup can be paid in 2 to 4 monthly installments (no payment over $2,500); the monthly fee is billed separately from the start. Monthly fees renew automatically each month until you cancel (30 days' notice, no cancellation fee). A one-time US texting registration fee of about $20 (set by the carriers and Twilio) is passed through at cost. No other hidden fees. Prices in USD, no long-term contract.";
 
 const usd = n => "$" + n.toLocaleString("en-US", { maximumFractionDigits: 2 });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -61,7 +61,7 @@ const nameOf = id => AUTOMATIONS.find(a => a.id === id).name;
     const head = `<thead><tr><th scope="col">Automation</th>${TIERS.map(t => `<th scope="col"${t.featured ? ' class="feat"' : ""}>${esc(t.name)}<small>${t.count} of 9</small></th>`).join("")}</tr></thead>`;
     const rows = AUTOMATIONS.map((a, i) => `<tr><th scope="row"><span class="n">${String(i + 1).padStart(2, "0")}</span><b>${esc(a.name)}</b><small>${esc(a.short)}</small></th>${TIERS.map(t => {
       const inc = t.includes.includes(a.id);
-      const cell = t.pickAny ? (inc ? '<span class="dot" aria-label="Recommended"></span><small>recommended</small>' : '<span class="or">or</span>') : (inc ? '<span class="dot" aria-label="Included"></span>' : '<span class="dash" aria-label="Add-on">+</span>');
+      const cell = t.pickAny ? (inc ? '<span class="dot" role="img" aria-label="Recommended"></span><small>recommended</small>' : '<span class="or">or</span>') : (inc ? '<span class="dot" role="img" aria-label="Included"></span>' : '<span class="dash" role="img" aria-label="Available as an add-on">+</span>');
       return `<td${t.featured ? ' class="feat"' : ""}>${cell}</td>`;
     }).join("")}</tr>`).join("");
     const money = (label, fn) => `<tr class="money"><th scope="row">${label}</th>${TIERS.map(t => `<td${t.featured ? ' class="feat"' : ""}>${fn(t)}</td>`).join("")}</tr>`;

@@ -3,14 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Ovenpilot — AI systems for local restaurants</title>
 <meta name="description" content="Ovenpilot sets up 9 AI automations for local restaurants: phone receptionist, reservations, orders, no-show shield, reviews, promos, stock, rosters, and a morning brief.">
 <meta name="theme-color" content="#0B1220">
 <link rel="icon" type="image/svg+xml" href="assets/ovenpilot-app-icon.svg">
 <link rel="apple-touch-icon" href="assets/ovenpilot-app-icon-180.png">
 <link rel="stylesheet" href="style.css">
-<meta property="og:type" content="website"><meta property="og:url" content="https://taftbunker.github.io/ovenpilot/"><meta property="og:title" content="Ovenpilot: Always on. Always answering."><meta property="og:description" content="AI automations for local restaurants: answer every call, book every table, and bring guests back on slow nights."><meta property="og:image" content="https://taftbunker.github.io/ovenpilot/og.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://taftbunker.github.io/ovenpilot/"></head>
+<meta property="og:type" content="website"><meta property="og:url" content="https://taftbunker.github.io/ovenpilot/"><meta property="og:title" content="Ovenpilot: Always on. Always answering."><meta property="og:description" content="AI automations for local restaurants: calls answered around the clock, tables booked, and guests brought back on slow nights."><meta property="og:image" content="https://taftbunker.github.io/ovenpilot/og.png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://taftbunker.github.io/ovenpilot/"></head>
 <body>
+<a class="skip" href="#top">Skip to content</a>
 <header class="nav">
   <div class="container nav-inner">
     <a class="logo" href="#top" aria-label="Ovenpilot home"><img src="assets/ovenpilot-logo.svg" alt="Ovenpilot" height="26"></a>
@@ -28,7 +31,7 @@
       <div class="hero-copy">
         <p class="kicker">AI systems for local restaurants</p>
         <h1>Always on.<br>Always <span class="hl">answering.</span></h1>
-        <p class="lead">Like a pilot light for your restaurant: AI automations that answer every call, book every table, and bring guests back on slow nights.</p>
+        <p class="lead">Like a pilot light for your restaurant: AI automations that pick up calls around the clock, book tables, and bring guests back on slow nights.</p>
         <div class="actions">
           <a class="btn btn-primary" href="https://whop.com/ovenpilot">Book a free call</a>
           <a class="link-arrow" href="#demo">See the live demo</a>
@@ -64,7 +67,7 @@
     <div class="container split">
       <header class="sec-head"><span class="num">02</span><h2>Nine automations. Start with one.</h2><p class="sec-sub">Each one runs on its own, and they work better together. Pick the ones you need now and add more later.</p></header>
       <div class="services">
-        <article><span class="idx">01</span><div><h3>AI Phone Receptionist</h3><p>Answers every call 24/7. Takes reservations and to-go orders, answers hours and menu questions, and hands off to your staff when a person is needed.</p></div></article>
+        <article><span class="idx">01</span><div><h3>AI Phone Receptionist</h3><p>Answers calls 24/7, including during the rush and after hours. Takes reservations and to-go orders, answers hours and menu questions, and hands off to your staff when a person is needed.</p></div></article>
         <article><span class="idx">02</span><div><h3>Reservations</h3><p>Guests book by WhatsApp or text at any hour. It checks your floor plan, confirms the table, and sends a map pin.</p></div></article>
         <article><span class="idx">03</span><div><h3>Orders</h3><p>Delivery-app and website orders land in one queue and print as kitchen tickets.</p></div></article>
         <article><span class="idx">04</span><div><h3>No-show Shield</h3><p>Every booking is confirmed automatically 2 hours ahead. Tables that don't confirm are released to the waitlist.</p></div></article>
@@ -110,7 +113,7 @@
     <div class="container">
       <header class="sec-head wide"><span class="num">05</span><h2>Packages from Basic to Max.</h2><p class="sec-sub">Start with 1 automation or run all 9. Every package includes setup in your restaurant's voice, staff walkthrough, and a weekly update.</p></header>
       <div class="tiers" id="tiers" data-count="5">
-        <noscript><p>Basic (1 automation) $1,000 setup + $200/mo, 800 call minutes/month included, then $0.15 per extra minute · Starter (3) $2,500 + $500/mo · Growth (5) $4,500 + $1,000/mo · Pro (7) $7,000 + $1,400/mo · Max (all 9, Full Restaurant Growth System) $10,000 + $2,000/mo. Extra automation $900 + $175/mo. Setup can be paid in monthly installments: Starter 2 × $1,250, Growth 2 × $2,250, Pro 4 × $1,750, Max 4 × $2,500, with the monthly fee billed separately.</p></noscript>
+        <noscript><p>Basic (1 automation) $1,000 setup + $200/mo, 800 call minutes/month included, then $0.15 per extra minute · Starter (3) $2,500 + $500/mo · Growth (5) $4,500 + $1,000/mo · Pro (7) $7,000 + $1,400/mo · Max (all 9, Full Restaurant Growth System) $10,000 + $2,000/mo. Extra automation $900 + $175/mo. Setup can be paid in monthly installments: Starter 2 × $1,250, Growth 2 × $2,250, Pro 4 × $1,750, Max 4 × $2,500, with the monthly fee billed separately. Monthly fees renew automatically until you cancel (30 days' notice). A one-time US texting registration fee of about $20 is passed through at cost.</p></noscript>
       </div>
       <div class="compare-wrap" id="compare-section">
         <h3 class="compare-title">What's in each package</h3>
@@ -118,6 +121,7 @@
         <p class="addon" id="addon"></p>
       </div>
       <p class="fine" id="pricing-note"></p>
+      <p class="fine">Before you buy: <a href="terms.html">Terms</a> · <a href="refunds.html">Refund &amp; cancellation policy</a> · <a href="privacy.html">Privacy</a></p>
     </div>
   </section>
 
@@ -136,7 +140,10 @@
 <footer class="foot">
   <div class="container foot-inner">
     <img src="assets/ovenpilot-logo-white.svg" alt="Ovenpilot" height="20">
-    <span>© 2026 Ovenpilot · Austin area, Texas</span>
+    <div class="foot-meta">
+      <nav aria-label="Legal"><ul class="foot-links"><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="refunds.html">Refunds &amp; cancellation</a></li><li><a href="subprocessors.html">Subprocessors</a></li><li><a href="ai.html">AI disclosure</a></li><li><a href="https://whop.com/ovenpilot">Contact</a></li></ul></nav>
+      <span>© 2026 Ovenpilot · Austin area, Texas · No cookies or tracking on this site</span>
+    </div>
   </div>
 </footer>
 <script src="pricing.js"></script>

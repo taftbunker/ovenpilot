@@ -15,7 +15,7 @@ function addContact({name,phone,email,birthday,table,consent}){
   db.contacts.push(contact);
   const first=contact.name.split(' ')[0];
   db.messages.push({type:'sms',to:contact.phone,at:contact.createdAt,body:`${RESTAURANT.name}: Hi ${first}! Your ${RESTAURANT.offer} is ready. Show code ${contact.code} to your server. Reply STOP to opt out.`});
-  db.messages.push({type:'email',to:contact.email,at:contact.createdAt,subject:`Your free appetizer at ${RESTAURANT.name} 🍝`,body:`Ciao ${first},\n\nThanks for joining the ${RESTAURANT.name} VIP list! Here's your claim code:\n\n    ${contact.code}\n\nShow it to your server for one free appetizer (one per guest, dine-in).\n\nGrazie,\nThe ${RESTAURANT.name} team`});
+  if(contact.email) db.messages.push({type:'email',to:contact.email,at:contact.createdAt,subject:`Your free appetizer at ${RESTAURANT.name} 🍝`,body:`Ciao ${first},\n\nThanks for joining the ${RESTAURANT.name} VIP list! Here's your claim code:\n\n    ${contact.code}\n\nShow it to your server for one free appetizer (one per guest, dine-in).\n\nGrazie,\nThe ${RESTAURANT.name} team`});
   saveDB(db);return {contact,duplicate:false};
 }
 const TEMPLATES={

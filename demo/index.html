@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"><meta name="referrer" content="strict-origin-when-cross-origin"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Demo — Restaurant QR Text-List System</title><link rel="stylesheet" href="style.css"></head><body>
 <div class="banner">DEMO — fictional restaurant "Bella Cucina". Everything is stored in your browser; no real messages are sent.</div>
 <div class="wrap" style="max-width:820px">
@@ -12,5 +12,5 @@
     <div class="card" style="text-align:center"><img src="qr/table-qr.png" alt="QR code to the diner landing page" style="width:100%;max-width:240px"><div class="fine">Table 12 QR · points to <code id="qrurl"></code></div>
       <a class="btn small secondary" href="qr/table-tent.png" style="margin-top:10px">Printable table tent</a></div>
   </div>
-</div><footer class="powered"><a href="../"><img src="assets/ovenpilot-mark.svg" alt="" height="14"><span>Powered by <b>Ovenpilot</b></span></a></footer>
-<script>fetch('qr/qr-target.txt').then(r=>r.text()).then(t=>document.getElementById('qrurl').textContent=t.trim()).catch(()=>{})</script></body></html>
+</div><footer class="powered"><a href="../"><img src="assets/ovenpilot-mark.svg" alt="" height="14"><span>Powered by <b>Ovenpilot</b></span></a><nav class="legal-links" aria-label="Legal"><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../refunds.html">Refunds &amp; cancellation</a> · <a href="../subprocessors.html">Subprocessors</a> · <a href="../ai.html">AI disclosure</a></nav></footer>
+<script src="index.js"></script></body></html>
