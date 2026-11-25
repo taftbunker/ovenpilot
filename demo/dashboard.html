@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"><meta name="referrer" content="strict-origin-when-cross-origin"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bella Cucina — Owner Dashboard (Demo)</title><link rel="stylesheet" href="style.css"></head><body>
-<div class="banner">DEMO — fictional restaurant. Text blasts are simulated; nothing is actually sent.</div>
-<div class="wrap">
+<meta name="robots" content="noindex"><title>Bella Cucina — Owner Dashboard (Demo)</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="banner">DEMO — fictional restaurant. Text blasts are simulated; nothing is actually sent.</header>
+<main class="wrap">
   <div class="topbar"><div><h1>Bella Cucina · Owner Dashboard</h1><div class="fine">VIP text list (simple CRM)</div></div>
     <div class="row" style="margin:0"><a class="btn small secondary" href="index.html">Demo home</a><a class="btn small secondary" href="landing.html?table=12">Diner page</a>
     <button class="btn small secondary" id="seed">Load sample guests</button><button class="btn small secondary" id="reset">Reset demo</button></div></div>
@@ -9,11 +9,11 @@
     <div class="stat"><b id="sTotal">0</b><span>Contacts</span></div><div class="stat"><b id="sWeek">0</b><span>Joined last 7 days</span></div>
     <div class="stat"><b id="sRed">0</b><span>Appetizers redeemed</span></div><div class="stat"><b id="sSent">0</b><span>Texts sent (simulated)</span></div></div>
   <div class="two" style="margin-top:6px">
-    <div class="card"><div class="topbar"><h3 style="margin:0">Contacts</h3><input id="q" placeholder="Search name, phone, email" style="max-width:240px;padding:8px 12px"></div>
-      <div style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Table</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="card"><div class="topbar"><h2 class="h3" style="margin:0">Contacts</h2><input id="q" type="search" aria-label="Search contacts" placeholder="Search name, phone, email" style="max-width:240px;padding:8px 12px"></div>
+      <div style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Table</th><th>Code</th><th>Status</th><th><span class="vh">Actions</span></th></tr></thead><tbody id="rows"></tbody></table></div>
       <p class="fine" id="empty">No contacts yet. Scan the QR (or open the diner page) to add one, or load sample guests.</p></div>
     <div>
-      <div class="card"><h3 style="margin-top:0">Send a text blast <span class="sim">Simulated</span></h3>
+      <div class="card"><h2 class="h3" style="margin-top:0">Send a text blast <span class="sim">Simulated</span></h2>
         <label for="tpl">Template</label><select id="tpl"></select>
         <label for="aud">Audience</label><select id="aud"><option value="all">All opted-in contacts</option><option value="birthday">Birthdays this month</option></select>
         <label for="msg">Message <span class="fine">({first} and {restaurant} are filled in per contact)</span></label><textarea id="msg"></textarea>
@@ -21,8 +21,8 @@
         <label for="when">Schedule</label><select id="when"><option value="now">Send now</option><option value="mon4">Every Monday 4:00 PM (slow hour)</option></select>
         <button class="btn" id="send">Send blast</button><div class="err" id="sendMsg" style="color:var(--green)"></div>
         <div id="preview" class="phone hidden" style="margin-top:12px"><div class="fine">Preview for first recipient:</div><div class="bubble" id="pv"></div></div></div>
-      <div class="card log"><h3 style="margin-top:0">Campaign history</h3><div id="camps"><p class="fine">No blasts sent yet.</p></div></div>
+      <div class="card log"><h2 class="h3" style="margin-top:0">Campaign history</h2><div id="camps"><p class="fine">No blasts sent yet.</p></div></div>
     </div></div>
-</div>
+</main>
 <footer class="powered"><a href="../"><img src="assets/ovenpilot-mark.svg" alt="" height="14"><span>Powered by <b>Ovenpilot</b></span></a><nav class="legal-links" aria-label="Legal"><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../refunds.html">Refunds &amp; cancellation</a> · <a href="../subprocessors.html">Subprocessors</a> · <a href="../ai.html">AI disclosure</a></nav></footer>
 <script src="data.js"></script><script src="dashboard.js"></script></body></html>
