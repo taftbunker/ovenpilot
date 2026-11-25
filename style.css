@@ -80,7 +80,7 @@ h3{font-size:var(--t-md);line-height:1.3}
 .body-lg{font-size:var(--t-md);color:var(--slate);max-width:44ch;line-height:1.5}
 .demo{display:grid;grid-template-columns:1.5fr 1fr;gap:var(--s7);align-items:center}
 .demo-qr{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:var(--s5);text-align:center;color:var(--slate);font-size:var(--t-sm)}
-.demo-qr img{display:block;width:100%;max-width:220px;margin:0 auto var(--s3)}
+.demo-qr img{display:block;width:100%;max-width:220px;height:auto;margin:0 auto var(--s3)}
 
 /* pricing tiers: auto-fit grid, works for 1–9 tiers */
 .tiers{display:grid;gap:var(--s4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -206,3 +206,5 @@ h3{font-size:var(--t-md);line-height:1.3}
 .legal .note{border-left:3px solid var(--orange);padding:var(--s2) var(--s4);margin:var(--s4) 0;background:#FFF7F1}
 .legal nav.toc{margin-top:var(--s4);font-size:var(--t-sm)}
 .legal nav.toc a{margin-right:var(--s4)}
+
+@media (max-width:640px){.legal table{font-size:13px}.legal th,.legal td{padding-left:6px;padding-right:6px;overflow-wrap:anywhere;hyphens:auto}}
